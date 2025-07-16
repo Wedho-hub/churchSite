@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';
-import ImageUpload from '../components/ImageUploads'; // ✅ Ensure correct file name here
+import ImageUpload from '../components/ImageUploads';
 
 function ManageBlogs() {
   const { token } = useAuth();

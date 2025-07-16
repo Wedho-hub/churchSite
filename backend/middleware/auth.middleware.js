@@ -1,11 +1,14 @@
 /**
- * Middleware to verify JWT and attach admin info to request
+ * Middleware to verify JWT and check admin access
  * Uses ES module syntax.
  */
 
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 
-const auth = (req, res, next) => {
+/**
+ * Verify JWT token and attach user/admin info to the request.
+ */
+export const verifyToken = (req, res, next) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader)
@@ -15,11 +18,20 @@ const auth = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.adminId = decoded.adminId;
+    req.admin = decoded; // Attach all token data (e.g. adminId, isAdmin)
     next();
   } catch (err) {
     return res.status(403).json({ message: "Invalid or expired token" });
   }
 };
 
-export default auth;
+/**
+ * Check if the authenticated user is an admin.
+ */
+export const isAdmin = (req, res, next) => {
+  // Assumes the token includes isAdmin: true
+  if (!req.admin?.isAdmin) {
+    return res.status(403).json({ message: "Admin access only" });
+  }
+  next();
+};

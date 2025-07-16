@@ -1,7 +1,11 @@
+/**
+ * Footer component
+ * Displays copyright and developer credit.
+ */
 function Footer() {
   return (
     <footer className="bg-dark text-white text-center py-3 mt-5">
-      <div>© {new Date().getFullYear()} Inkosiyeza SDA Church</div>
+      <div>&copy; {new Date().getFullYear()} Inkosiyeza SDA Church</div>
       <small>
         Powered by{" "}
         <a
@@ -10,7 +14,7 @@ function Footer() {
           rel="noreferrer"
           className="text-warning"
         >
-          Tishbite Digital 
+          Tishbite Digital
         </a>
       </small>
     </footer>

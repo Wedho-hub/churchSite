@@ -1,24 +1,21 @@
-
-/**
- * Routes for site content management.
- * Uses ES module syntax.
- */
-
-import express from 'express';
+import express from "express";
 import {
   getAllSections,
   getSection,
   upsertSection,
-} from '../controllers/content.controller.js';
-import auth from '../middleware/auth.middleware.js';
+} from "../controllers/content.controller.js";
+
+import { verifyToken, isAdmin } from "../middleware/auth.middleware.js";
 
 const router = express.Router();
 
-// Public
-router.get('/', getAllSections);
-router.get('/:section', getSection);
+// GET all sections (public)
+router.get("/", getAllSections);
 
-// Admin Protected
-router.put('/:section', auth, upsertSection);
+// GET single section by name (e.g., /about, /mission)
+router.get("/:section", getSection);
+
+// PUT or POST to update section (admin only)
+router.put("/:section", verifyToken, isAdmin, upsertSection);
 
 export default router;

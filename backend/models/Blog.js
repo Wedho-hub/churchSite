@@ -1,7 +1,6 @@
-// models/Blog.js
 /**
- * Blog post schema for the church website
- * Uses ES module syntax.
+ * Blog post schema for the church website.
+ * Stores title, slug, content, and author for each blog post.
  */
 
 import mongoose from 'mongoose';
@@ -9,7 +8,7 @@ import mongoose from 'mongoose';
 const blogSchema = new mongoose.Schema(
   {
     title: { type: String, required: true, trim: true },
-    slug: { type: String, unique: true }, // For SEO-friendly URLs
+    slug: { type: String, unique: true }, // SEO-friendly URL slug
     content: { type: String, required: true },
     author: { type: String, default: 'Admin' },
   },

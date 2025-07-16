@@ -1,7 +1,6 @@
-
 /**
- * Routes for blog post management.
- * Uses ES module syntax.
+ * Routes for blog post management (CRUD).
+ * Public can read; admin can create, update, delete.
  */
 
 import express from 'express';
@@ -12,17 +11,18 @@ import {
   updateBlog,
   deleteBlog,
 } from '../controllers/blog.controller.js';
-import auth from '../middleware/auth.middleware.js';
+
+import { verifyToken, isAdmin } from '../middleware/auth.middleware.js';
 
 const router = express.Router();
 
-// Public
-router.get('/', getBlogs);
-router.get('/:slug', getBlogBySlug);
+// 🌍 Public Routes
+router.get('/', getBlogs); // Get all blogs
+router.get('/:slug', getBlogBySlug); // Get blog by slug
 
-// Admin Protected
-router.post('/', auth, createBlog);
-router.put('/:slug', auth, updateBlog);
-router.delete('/:slug', auth, deleteBlog);
+// 🔐 Admin Routes (protected)
+router.post('/', verifyToken, isAdmin, createBlog); // Create blog
+router.put('/:slug', verifyToken, isAdmin, updateBlog); // Update blog
+router.delete('/:slug', verifyToken, isAdmin, deleteBlog); // Delete blog
 
 export default router;

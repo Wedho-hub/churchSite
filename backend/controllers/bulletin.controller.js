@@ -1,5 +1,15 @@
+/**
+ * Controller for church bulletins (PDFs, docs, etc.)
+ * Handles fetching and uploading bulletins.
+ */
+
 import Bulletin from '../models/Bulletin.js';
 
+/**
+ * Get all bulletins, sorted by creation date (newest first).
+ * @route GET /api/bulletins
+ * @returns {Array} List of bulletins
+ */
 export const getBulletins = async (req, res) => {
   try {
     const bulletins = await Bulletin.find().sort({ createdAt: -1 });
@@ -9,6 +19,14 @@ export const getBulletins = async (req, res) => {
   }
 };
 
+/**
+ * Upload a new bulletin (admin only).
+ * @route POST /api/bulletins
+ * @param {string} title - Bulletin title
+ * @param {string} description - Bulletin description
+ * @param {file} file - Uploaded file (PDF, doc, etc.)
+ * @returns {Object} Created bulletin or error message
+ */
 export const createBulletin = async (req, res) => {
   try {
     const { title, description } = req.body;

@@ -8,7 +8,7 @@ import {
   uploadImageToGallery,
   deleteImage,
 } from "../controllers/gallery.controller.js";
-import auth from "../middleware/auth.middleware.js";
+import { verifyToken, isAdmin } from '../middleware/auth.middleware.js';
 
 const router = express.Router();
 
@@ -32,9 +32,9 @@ const upload = multer({ storage });
 router.get("/", getGallery);
 
 // 🔒 Admin - Upload image
-router.post("/", auth, upload.single("image"), uploadImageToGallery);
+router.post("/", verifyToken, isAdmin, upload.single("image"), uploadImageToGallery);
 
 // 🔒 Admin - Delete image
-router.delete("/:id", auth, deleteImage);
+router.delete("/:id", verifyToken, isAdmin, deleteImage);
 
 export default router;

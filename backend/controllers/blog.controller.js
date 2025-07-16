@@ -1,17 +1,23 @@
 /**
  * Controller for blog post management.
- * Uses ES module syntax.
+ * Handles CRUD operations for blog posts.
  */
 
 import Blog from '../models/Blog.js';
 import slugify from 'slugify';
 
 /**
- * Create new blog post
+ * Create a new blog post.
+ * @route POST /api/blogs
+ * @param {string} title - Blog title
+ * @param {string} content - Blog content
+ * @param {string} author - Author name
+ * @returns {Object} Created blog or error message
  */
 export const createBlog = async (req, res) => {
   try {
     const { title, content, author } = req.body;
+    // Generate slug for SEO-friendly URLs
     const slug = slugify(title, { lower: true, strict: true });
 
     const blog = new Blog({ title, slug, content, author });
@@ -24,7 +30,9 @@ export const createBlog = async (req, res) => {
 };
 
 /**
- * Get all blog posts
+ * Get all blog posts, sorted by creation date (newest first).
+ * @route GET /api/blogs
+ * @returns {Array} List of blogs
  */
 export const getBlogs = async (req, res) => {
   try {
@@ -38,7 +46,9 @@ export const getBlogs = async (req, res) => {
 };
 
 /**
- * Get single blog by slug
+ * Get a single blog post by slug.
+ * @route GET /api/blogs/:slug
+ * @returns {Object} Blog post or error message
  */
 export const getBlogBySlug = async (req, res) => {
   try {
@@ -54,7 +64,9 @@ export const getBlogBySlug = async (req, res) => {
 };
 
 /**
- * Update blog post
+ * Update a blog post by slug.
+ * @route PUT /api/blogs/:slug
+ * @returns {Object} Updated blog or error message
  */
 export const updateBlog = async (req, res) => {
   try {

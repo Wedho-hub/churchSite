@@ -1,12 +1,14 @@
 /**
- * Controller for site content management.
- * Uses ES module syntax.
+ * Controller for site content management (about, mission, etc.)
+ * Handles CRUD for static site sections.
  */
 
 import Content from '../models/Content.js';
 
 /**
- * Get all site sections (about, mission, etc.)
+ * Get all site content sections.
+ * @route GET /api/content
+ * @returns {Array} List of content sections
  */
 export const getAllSections = async (req, res) => {
   try {
@@ -20,7 +22,9 @@ export const getAllSections = async (req, res) => {
 };
 
 /**
- * Get content by section
+ * Get content for a specific section (e.g., about, mission).
+ * @route GET /api/content/:section
+ * @returns {Object} Section content or error message
  */
 export const getSection = async (req, res) => {
   try {
@@ -36,7 +40,12 @@ export const getSection = async (req, res) => {
 };
 
 /**
- * Create or update section content
+ * Create or update a section's content (admin only).
+ * @route PUT /api/content/:section
+ * @param {string} section - Section name
+ * @param {string} title - Section title
+ * @param {string} body - Section body/content
+ * @returns {Object} Updated/created section or error message
  */
 export const upsertSection = async (req, res) => {
   try {

@@ -1,3 +1,8 @@
+
+/**
+ * Routes for church bulletins (PDFs, docs, etc.).
+ * Public can view; admin can upload.
+ */
 import express from "express";
 import multer from "multer";
 import path from "path";
@@ -5,11 +10,11 @@ import {
   createBulletin,
   getBulletins,
 } from "../controllers/bulletin.controller.js";
-import auth from "../middleware/auth.middleware.js";
+import { verifyToken, isAdmin } from '../middleware/auth.middleware.js';
 
 const router = express.Router();
 
-// 🔧 Configure file uploads (PDFs, docs)
+// Configure file uploads (PDFs, docs)
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, "uploads/"),
   filename: (req, file, cb) =>
@@ -28,10 +33,11 @@ const fileFilter = (req, file, cb) => {
 
 const upload = multer({ storage, fileFilter });
 
-// 📥 Admin upload route
-router.post("/", auth, upload.single("file"), createBulletin);
 
-// 📤 Public route
-router.get("/", getBulletins);
+// Admin upload route (protected)
+router.post("/", verifyToken, isAdmin, upload.single("file"), createBulletin); // Upload bulletin
+
+// Public route
+router.get("/", getBulletins); // Get all bulletins
 
 export default router;

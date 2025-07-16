@@ -1,32 +1,32 @@
-import mongoose from 'mongoose';
+/**
+ * Content schema for static site sections (about, mission, etc.).
+ * Each section is unique and stores a title and body.
+ */
 
-const { Schema, model } = mongoose;
+import mongoose from "mongoose";
 
-const contentSchema = new Schema({
-  title: {
+const contentSchema = new mongoose.Schema({
+  section: {
     type: String,
-    required: true,       // ensure it's provided
-    trim: true,           // auto-trim whitespace
+    required: true,
+    unique: true, // Only one entry per section name
+    trim: true,
+    lowercase: true,
   },
-  body: {
+  title: {
     type: String,
     required: true,
     trim: true,
   },
-  section: {
-    type: String,         // e.g. "About", "Mission", etc.
+  body: {
+    type: String,
     required: true,
-    enum: ['About', 'Mission', 'Vision', 'History'], // example constraint
   },
   updatedAt: {
     type: Date,
-    default: () => new Date(),
+    default: Date.now,
   },
-}, {
-  timestamps: true,       // adds createdAt & updatedAt automatically
 });
 
-// you can add instance or static methods if needed:
-// contentSchema.methods.doSomething = function() { ... };
-
-export default model('Content', contentSchema);
+const Content = mongoose.model("Content", contentSchema);
+export default Content;

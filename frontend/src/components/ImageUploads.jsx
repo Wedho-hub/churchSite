@@ -3,23 +3,26 @@ import axios from "axios";
 import { useAuth } from "../contexts/AuthContext";
 
 /**
- * Handles selecting a file, uploading it to /api/upload,
- * and returning the uploaded image URL to the parent.
+ * ImageUpload component
+ * Handles selecting a file, uploading it to /api/upload (protected route),
+ * and returning the uploaded image URL to the parent via onUpload callback.
+ * Shows a preview and upload status message.
+ * @param {function} onUpload - Callback to receive uploaded image URL
  */
 function ImageUpload({ onUpload }) {
-  const { token } = useAuth(); // <- need token because route is protected
+  const { token } = useAuth(); // JWT token for protected upload route
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState("");
   const [msg, setMsg] = useState("");
 
-  // 🔼 When the user picks a file
+  // When the user picks a file
   const handleSelect = (e) => {
     const chosen = e.target.files[0];
     setFile(chosen);
     setPreview(URL.createObjectURL(chosen)); // local preview
   };
 
-  // 🔼 Upload to backend
+  // Upload to backend
   const handleUpload = async () => {
     if (!file) return;
 
@@ -30,12 +33,12 @@ function ImageUpload({ onUpload }) {
       const res = await axios.post("/api/upload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${token}`, // ✔️ JWT header
+          Authorization: `Bearer ${token}`, // JWT header
         },
       });
 
       setMsg("Uploaded successfully");
-      onUpload(res.data.fileUrl); // <- Gives parent the URL (/uploads/filename.jpg)
+      onUpload(res.data.fileUrl); // Gives parent the URL (/uploads/filename.jpg)
     } catch (err) {
       console.error(err);
       setMsg("Upload failed");
@@ -44,6 +47,7 @@ function ImageUpload({ onUpload }) {
 
   return (
     <>
+      {/* Preview image if selected */}
       {preview && (
         <img
           src={preview}

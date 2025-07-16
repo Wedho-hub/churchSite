@@ -1,6 +1,6 @@
 /**
  * Routes for admin authentication and management.
- * Note: The /register route should be secured or disabled after initial setup.
+ * SECURITY WARNING: The /register route should be disabled after initial setup to prevent unauthorized admin creation.
  */
 
 import express from 'express';
@@ -8,8 +8,8 @@ import { register, login } from '../controllers/admin.controller.js';
 
 const router = express.Router();
 
-// Public routes (secure /register later)
-router.post('/register', register);
-router.post('/login', login);
+// Public routes (disable /register after first use)
+router.post('/register', register); // Create admin (run once, then disable)
+router.post('/login', login); // Login admin and get JWT
 
 export default router;

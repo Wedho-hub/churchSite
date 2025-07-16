@@ -1,5 +1,15 @@
+/**
+ * Controller for gallery image management.
+ * Handles fetching, uploading, and deleting gallery images.
+ */
+
 import Gallery from '../models/Gallery.js';
 
+/**
+ * Get all gallery images, sorted by creation date (newest first).
+ * @route GET /api/gallery
+ * @returns {Array} List of gallery images
+ */
 export const getGallery = async (req, res) => {
   try {
     const images = await Gallery.find().sort({ createdAt: -1 });
@@ -9,6 +19,13 @@ export const getGallery = async (req, res) => {
   }
 };
 
+/**
+ * Upload a new image to the gallery (admin only).
+ * @route POST /api/gallery
+ * @param {string} caption - Image caption
+ * @param {file} image - Uploaded image file
+ * @returns {Object} Created image or error message
+ */
 export const uploadImageToGallery = async (req, res) => {
   try {
     const { caption } = req.body;
@@ -25,6 +42,11 @@ export const uploadImageToGallery = async (req, res) => {
   }
 };
 
+/**
+ * Delete an image from the gallery (admin only).
+ * @route DELETE /api/gallery/:id
+ * @returns {Object} Success or error message
+ */
 export const deleteImage = async (req, res) => {
   try {
     const image = await Gallery.findByIdAndDelete(req.params.id);

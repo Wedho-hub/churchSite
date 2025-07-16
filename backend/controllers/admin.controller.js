@@ -1,6 +1,7 @@
 /**
  * Controller for admin authentication and management.
- * Uses ES module syntax.
+ * Handles admin registration and login using JWT.
+ * SECURITY NOTE: The /register route should be disabled after initial setup to prevent unauthorized admin creation.
  */
 
 import Admin from '../models/Admin.js';
@@ -8,8 +9,11 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 /**
- * Register a new admin (run once and disable route later)
- * Validates input, hashes password, and saves new admin to database.
+ * Register a new admin (should be run only once, then route disabled for security).
+ * @route POST /api/admin/register
+ * @param {string} username - Admin username
+ * @param {string} password - Admin password
+ * @returns {Object} Success or error message
  */
 export const register = async (req, res) => {
   try {
@@ -20,12 +24,15 @@ export const register = async (req, res) => {
       return res.status(400).json({ message: "All fields are required" });
     }
 
+    // Check if admin already exists
     const exists = await Admin.findOne({ username });
     if (exists)
       return res.status(409).json({ message: "Admin already exists" });
 
+    // Hash password for security
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    // Create and save new admin
     const newAdmin = new Admin({ username, password: hashedPassword });
     await newAdmin.save();
 
@@ -41,20 +48,26 @@ export const register = async (req, res) => {
 };
 
 /**
- * Login Admin and return JWT
- * Validates credentials and returns a JWT token for authentication.
+ * Login Admin and return JWT for authentication.
+ * @route POST /api/admin/login
+ * @param {string} username - Admin username
+ * @param {string} password - Admin password
+ * @returns {Object} JWT token or error message
  */
 export const login = async (req, res) => {
   try {
     const { username, password } = req.body;
 
+    // Find admin by username
     const admin = await Admin.findOne({ username });
     if (!admin) return res.status(404).json({ message: "Admin not found" });
 
+    // Compare password
     const isMatch = await bcrypt.compare(password, admin.password);
     if (!isMatch)
       return res.status(401).json({ message: "Invalid credentials" });
 
+    // Generate JWT token
     const token = jwt.sign({ adminId: admin._id }, process.env.JWT_SECRET, {
       expiresIn: "2d",
     });

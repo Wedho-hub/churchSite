@@ -60,7 +60,7 @@ function Home() {
       </div>
 
       {/* Daily Verse section */}
-      <div className="alert alert-secondary text-center">
+      <div className="alert alert-secondary text-center" bg="success">
         <strong>Daily Verse:</strong> <em>{verse}</em>
       </div>
 

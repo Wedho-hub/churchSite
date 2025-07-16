@@ -1,9 +1,14 @@
+/**
+ * Bulletin schema for storing church bulletins (PDFs, docs, etc.).
+ * Each bulletin can have a title, description, and file URL.
+ */
+
 import mongoose from "mongoose";
 
 const bulletinSchema = new mongoose.Schema({
   title: { type: String, required: true },
   description: String,
-  file: String, // can be a URL to a PDF/doc
+  file: String, // URL to uploaded PDF/doc
   createdAt: { type: Date, default: Date.now },
 });
 
