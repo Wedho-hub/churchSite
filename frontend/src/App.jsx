@@ -34,7 +34,11 @@ const App = () => {
     const anchors = document.querySelectorAll('a[href^="#"]');
     const handleClick = (e) => {
       e.preventDefault();
-      const target = document.querySelector(e.currentTarget.getAttribute("href"));
+      const href = e.currentTarget.getAttribute("href");
+      // Skip empty or just "#" hrefs
+      if (!href || href === "#" || href.length <= 1) return;
+      
+      const target = document.querySelector(href);
       if (target) {
         target.scrollIntoView({ behavior: "smooth" });
       }

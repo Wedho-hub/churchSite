@@ -9,7 +9,7 @@ function Footer() {
       <small>
         Powered by{" "}
         <a
-          href="https://github.com"
+          href="www.linkedin.com/in/wellington-dhliwayo"
           target="_blank"
           rel="noreferrer"
           className="text-warning"

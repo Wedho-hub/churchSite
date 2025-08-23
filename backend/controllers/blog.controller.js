@@ -16,11 +16,11 @@ import slugify from 'slugify';
  */
 export const createBlog = async (req, res) => {
   try {
-    const { title, content, author } = req.body;
+    const { title, content, author,image } = req.body;
     // Generate slug for SEO-friendly URLs
     const slug = slugify(title, { lower: true, strict: true });
 
-    const blog = new Blog({ title, slug, content, author });
+    const blog = new Blog({ title, slug, content, author, image });
     await blog.save();
 
     res.status(201).json({ message: "Blog created", blog });
@@ -70,12 +70,12 @@ export const getBlogBySlug = async (req, res) => {
  */
 export const updateBlog = async (req, res) => {
   try {
-    const { title, content, author } = req.body;
+    const { title, content, author, image } = req.body;
     const slug = slugify(title, { lower: true, strict: true });
 
     const updated = await Blog.findOneAndUpdate(
       { slug: req.params.slug },
-      { title, slug, content, author },
+      { title, slug, content, author, image },
       { new: true }
     );
 

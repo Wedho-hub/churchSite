@@ -6,7 +6,7 @@ import ImageUpload from '../components/ImageUploads';
 function ManageBlogs() {
   const { token } = useAuth();
   const [blogs, setBlogs] = useState([]);
-  const [form, setForm] = useState({ title: '', content: '', image: '', _id: null });
+  const [form, setForm] = useState({ title: '', content: '', image: '', _id: null, slug: '' });
   const [message, setMsg] = useState('');
 
   const fetchBlogs = async () => {
@@ -25,7 +25,7 @@ function ManageBlogs() {
     try {
       if (form._id) {
         // Update existing blog
-        await axios.put(`/api/blogs/${form._id}`, form, {
+        await axios.put(`/api/blogs/${form.slug}`, form, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setMsg('✅ Blog updated');
@@ -37,7 +37,7 @@ function ManageBlogs() {
         setMsg('✅ Blog created');
       }
 
-      setForm({ title: '', content: '', image: '', _id: null });
+      setForm({ title: '', content: '', image: '', _id: null, slug: '' });
       fetchBlogs();
     } catch (err) {
       console.error(err);
@@ -45,10 +45,10 @@ function ManageBlogs() {
     }
   };
 
-  const deleteBlog = async (id) => {
+  const deleteBlog = async (slug) => {
     if (!window.confirm('Delete this blog?')) return;
     try {
-      await axios.delete(`/api/blogs/${id}`, {
+      await axios.delete(`/api/blogs/${slug}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setMsg('🗑️ Blog deleted');
@@ -65,6 +65,7 @@ function ManageBlogs() {
       content: blog.content,
       image: blog.image,
       _id: blog._id,
+      slug: blog.slug,
     });
     window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to form
   };
@@ -104,7 +105,7 @@ function ManageBlogs() {
         )}
 
         <button className="btn btn-primary">
-          {form._id ? 'Update Blog ✏️' : 'Post Blog ➕'}
+          {form.slug ? 'Update Blog ✏️' : 'Post Blog ➕'}
         </button>
       </form>
 
@@ -127,7 +128,7 @@ function ManageBlogs() {
               <button className="btn btn-sm btn-warning me-2" onClick={() => startEdit(b)}>
                 ✏️ Edit
               </button>
-              <button className="btn btn-sm btn-danger" onClick={() => deleteBlog(b._id)}>
+              <button className="btn btn-sm btn-danger" onClick={() => deleteBlog(b.slug)}>
                 🗑️ Delete
               </button>
             </div>

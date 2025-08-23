@@ -1,11 +1,10 @@
 /**
- * Admin sidebar navigation component.
- * Provides navigation links for all admin management sections.
+ * Professional Admin sidebar navigation component.
+ * Modern design with gradient background, user profile, and smooth animations.
  * Features responsive design and active link highlighting.
  */
 
 import { Link, useLocation } from 'react-router-dom';
-import { Nav, Card } from 'react-bootstrap';
 import { useAuth } from '../contexts/AuthContext';
 
 const AdminSidebar = () => {
@@ -21,141 +20,158 @@ const AdminSidebar = () => {
     return location.pathname === path || location.pathname.startsWith(path + '/');
   };
 
+  /**
+   * Get user initials for avatar
+   * @param {string} username - Username
+   * @returns {string} User initials
+   */
+  const getUserInitials = (username) => {
+    if (!username) return 'AD';
+    return username.split(' ').map(name => name[0]).join('').toUpperCase().slice(0, 2);
+  };
+
   return (
-    <div className="bg-primary text-white" style={{ minHeight: '100vh', width: '280px' }}>
-      {/* Admin Header */}
-      <div className="p-4 border-bottom border-light border-opacity-25">
-        <div className="d-flex align-items-center mb-3">
-          <i className="fas fa-user-shield fs-3 me-3"></i>
+    <div className="admin-sidebar">
+      {/* Admin Header with User Profile */}
+      <div className="admin-sidebar-header">
+        <div className="admin-user-info">
+          <div className="admin-user-avatar">
+            {getUserInitials(admin?.username)}
+          </div>
           <div>
-            <h5 className="mb-0">Admin Panel</h5>
-            <small className="opacity-75">
+            <h5 className="mb-0 text-white">Admin Panel</h5>
+            <small className="text-white-50">
               {admin?.username || 'Administrator'}
             </small>
           </div>
         </div>
       </div>
 
-      {/* Navigation Menu */}
-      <Nav className="flex-column p-3">
+      {/* Main Navigation */}
+      <nav className="admin-nav">
+        <div className="admin-nav-section">
+          <div className="admin-nav-section-title">Main Menu</div>
+        </div>
+
         {/* Dashboard */}
-        <Nav.Item className="mb-2">
-          <Nav.Link 
-            as={Link} 
+        <div className="admin-nav-item">
+          <Link 
             to="/admin/dashboard" 
-            className={`text-white text-decoration-none d-flex align-items-center p-3 rounded ${
-              isActive('/admin/dashboard') || location.pathname === '/admin' 
-                ? 'bg-white bg-opacity-25' 
-                : 'hover-bg-light'
+            className={`admin-nav-link ${
+              isActive('/admin/dashboard') || location.pathname === '/admin' ? 'active' : ''
             }`}
           >
-            <i className="fas fa-tachometer-alt me-3"></i>
+            <i className="fas fa-tachometer-alt admin-nav-icon"></i>
             <span>Dashboard</span>
-          </Nav.Link>
-        </Nav.Item>
+          </Link>
+        </div>
 
         {/* Content Management */}
-        <Nav.Item className="mb-2">
-          <Nav.Link 
-            as={Link} 
+        <div className="admin-nav-item">
+          <Link 
             to="/admin/content" 
-            className={`text-white text-decoration-none d-flex align-items-center p-3 rounded ${
-              isActive('/admin/content') ? 'bg-white bg-opacity-25' : 'hover-bg-light'
-            }`}
+            className={`admin-nav-link ${isActive('/admin/content') ? 'active' : ''}`}
           >
-            <i className="fas fa-edit me-3"></i>
+            <i className="fas fa-edit admin-nav-icon"></i>
             <span>Manage Content</span>
-          </Nav.Link>
-        </Nav.Item>
+          </Link>
+        </div>
 
         {/* Blog Management */}
-        <Nav.Item className="mb-2">
-          <Nav.Link 
-            as={Link} 
+        <div className="admin-nav-item">
+          <Link 
             to="/admin/blogs" 
-            className={`text-white text-decoration-none d-flex align-items-center p-3 rounded ${
-              isActive('/admin/blogs') ? 'bg-white bg-opacity-25' : 'hover-bg-light'
-            }`}
+            className={`admin-nav-link ${isActive('/admin/blogs') ? 'active' : ''}`}
           >
-            <i className="fas fa-blog me-3"></i>
+            <i className="fas fa-blog admin-nav-icon"></i>
             <span>Manage Blogs</span>
-          </Nav.Link>
-        </Nav.Item>
+          </Link>
+        </div>
 
         {/* Ministry Management */}
-        <Nav.Item className="mb-2">
-          <Nav.Link 
-            as={Link} 
+        <div className="admin-nav-item">
+          <Link 
             to="/admin/ministries" 
-            className={`text-white text-decoration-none d-flex align-items-center p-3 rounded ${
-              isActive('/admin/ministries') ? 'bg-white bg-opacity-25' : 'hover-bg-light'
-            }`}
+            className={`admin-nav-link ${isActive('/admin/ministries') ? 'active' : ''}`}
           >
-            <i className="fas fa-users me-3"></i>
+            <i className="fas fa-users admin-nav-icon"></i>
             <span>Manage Ministries</span>
-          </Nav.Link>
-        </Nav.Item>
+          </Link>
+        </div>
 
         {/* Messages */}
-        <Nav.Item className="mb-2">
-          <Nav.Link 
-            as={Link} 
+        <div className="admin-nav-item">
+          <Link 
             to="/admin/messages" 
-            className={`text-white text-decoration-none d-flex align-items-center p-3 rounded ${
-              isActive('/admin/messages') ? 'bg-white bg-opacity-25' : 'hover-bg-light'
-            }`}
+            className={`admin-nav-link ${isActive('/admin/messages') ? 'active' : ''}`}
           >
-            <i className="fas fa-envelope me-3"></i>
+            <i className="fas fa-envelope admin-nav-icon"></i>
             <span>Contact Messages</span>
-          </Nav.Link>
-        </Nav.Item>
+          </Link>
+        </div>
 
         {/* Divider */}
-        <hr className="border-light border-opacity-25 my-3" />
+        <div className="admin-nav-divider"></div>
 
-        {/* Quick Actions */}
-        <div className="mb-3">
-          <small className="text-white-50 text-uppercase fw-bold px-3">Quick Actions</small>
+        {/* Quick Actions Section */}
+        <div className="admin-nav-section">
+          <div className="admin-nav-section-title">Quick Actions</div>
         </div>
 
         {/* View Website */}
-        <Nav.Item className="mb-2">
-          <Nav.Link 
-            as={Link} 
+        <div className="admin-nav-item">
+          <Link 
             to="/" 
-            className="text-white text-decoration-none d-flex align-items-center p-3 rounded hover-bg-light"
+            className="admin-nav-link"
             target="_blank"
+            rel="noopener noreferrer"
           >
-            <i className="fas fa-external-link-alt me-3"></i>
+            <i className="fas fa-external-link-alt admin-nav-icon"></i>
             <span>View Website</span>
-          </Nav.Link>
-        </Nav.Item>
+          </Link>
+        </div>
 
         {/* Gallery Management */}
-        <Nav.Item className="mb-2">
-          <Nav.Link 
+        <div className="admin-nav-item">
+          <a 
             href="/gallery" 
-            className="text-white text-decoration-none d-flex align-items-center p-3 rounded hover-bg-light"
+            className="admin-nav-link"
             target="_blank"
+            rel="noopener noreferrer"
           >
-            <i className="fas fa-images me-3"></i>
+            <i className="fas fa-images admin-nav-icon"></i>
             <span>Gallery</span>
-          </Nav.Link>
-        </Nav.Item>
-      </Nav>
+          </a>
+        </div>
 
-      {/* Footer */}
-      <div className="mt-auto p-3 border-top border-light border-opacity-25">
-        <Card className="bg-white bg-opacity-10 border-0">
-          <Card.Body className="p-3">
-            <div className="d-flex align-items-center">
-              <i className="fas fa-info-circle text-white me-2"></i>
-              <small className="text-white">
-                Admin Dashboard v1.0
-              </small>
-            </div>
-          </Card.Body>
-        </Card>
+        {/* System Section */}
+        <div className="admin-nav-divider"></div>
+        
+        <div className="admin-nav-section">
+          <div className="admin-nav-section-title">System</div>
+        </div>
+
+        {/* Settings */}
+        <div className="admin-nav-item">
+          <Link 
+            to="/admin/settings" 
+            className={`admin-nav-link ${isActive('/admin/settings') ? 'active' : ''}`}
+          >
+            <i className="fas fa-cog admin-nav-icon"></i>
+            <span>Settings</span>
+          </Link>
+        </div>
+      </nav>
+
+      {/* Footer Info */}
+      <div className="mt-auto p-3" style={{ borderTop: '1px solid rgba(255, 255, 255, 0.1)' }}>
+        <div className="d-flex align-items-center justify-content-center">
+          <div className="text-center">
+            <i className="fas fa-shield-alt text-white-50 mb-2 d-block"></i>
+            <small className="text-white-50 d-block">Admin Dashboard</small>
+            <small className="text-white-50">v2.0</small>
+          </div>
+        </div>
       </div>
     </div>
   );

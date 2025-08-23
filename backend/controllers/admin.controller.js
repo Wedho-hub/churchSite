@@ -67,8 +67,11 @@ export const login = async (req, res) => {
     if (!isMatch)
       return res.status(401).json({ message: "Invalid credentials" });
 
-    // Generate JWT token
-    const token = jwt.sign({ adminId: admin._id }, process.env.JWT_SECRET, {
+    // Generate JWT token with admin flag
+    const token = jwt.sign({ 
+      adminId: admin._id, 
+      isAdmin: true 
+    }, process.env.JWT_SECRET, {
       expiresIn: "2d",
     });
 
