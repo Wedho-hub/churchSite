@@ -4,84 +4,102 @@
  * Features responsive design and active link highlighting.
  */
 
+import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
 const AdminSidebar = () => {
   const location = useLocation();
   const { admin } = useAuth();
+  const [open, setOpen] = useState(false);
 
-  /**
-   * Check if current path matches the given path
-   * @param {string} path - Path to check
-   * @returns {boolean} Whether the path is active
-   */
+  // Toggle sidebar for mobile
+  const toggleSidebar = () => setOpen((v) => !v);
+
   const isActive = (path) => {
     return location.pathname === path || location.pathname.startsWith(path + '/');
   };
 
-  /**
-   * Get user initials for avatar
-   * @param {string} username - Username
-   * @returns {string} User initials
-   */
   const getUserInitials = (username) => {
     if (!username) return 'AD';
     return username.split(' ').map(name => name[0]).join('').toUpperCase().slice(0, 2);
   };
 
   return (
-    <div className="admin-sidebar">
-      {/* Admin Header with User Profile */}
-      <div className="admin-sidebar-header">
-        <div className="admin-user-info">
-          <div className="admin-user-avatar">
-            {getUserInitials(admin?.username)}
+    <>
+      {/* Sidebar Toggle Button for mobile */}
+      <button
+        className="btn btn-primary d-lg-none position-fixed"
+        style={{ top: 20, left: 20, zIndex: 2001, borderRadius: '50%', width: 44, height: 44 }}
+        aria-label="Toggle admin sidebar"
+        onClick={toggleSidebar}
+      >
+        <i className="fas fa-bars"></i>
+      </button>
+      {/* Overlay for mobile sidebar */}
+      {open && (
+        <div
+          className="position-fixed top-0 start-0 w-100 h-100"
+          style={{ background: 'rgba(0,0,0,0.3)', zIndex: 2000 }}
+          onClick={toggleSidebar}
+        />
+      )}
+      <div className={`admin-sidebar${open ? ' show' : ''}`}
+        style={open ? { transform: 'translateX(0)' } : {}}
+      >
+        {/* Admin Header with User Profile */}
+        <div className="admin-sidebar-header">
+          <div className="admin-user-info">
+            <div className="admin-user-avatar">
+              {getUserInitials(admin?.username)}
+            </div>
+            <div>
+              <h5 className="mb-0 text-white">Admin Panel</h5>
+              <small className="text-white-50">
+                {admin?.username || 'Administrator'}
+              </small>
+            </div>
           </div>
-          <div>
-            <h5 className="mb-0 text-white">Admin Panel</h5>
-            <small className="text-white-50">
-              {admin?.username || 'Administrator'}
-            </small>
+        </div>
+
+        {/* Main Navigation */}
+        <nav className="admin-nav">
+          <div className="admin-nav-section">
+            <div className="admin-nav-section-title">Main Menu</div>
           </div>
-        </div>
-      </div>
 
-      {/* Main Navigation */}
-      <nav className="admin-nav">
-        <div className="admin-nav-section">
-          <div className="admin-nav-section-title">Main Menu</div>
-        </div>
+          {/* Dashboard */}
+          <div className="admin-nav-item">
+            <Link 
+              to="/admin/dashboard" 
+              className={`admin-nav-link ${
+                isActive('/admin/dashboard') || location.pathname === '/admin' ? 'active' : ''
+              }`}
+              onClick={() => setOpen(false)}
+            >
+              <i className="fas fa-tachometer-alt admin-nav-icon"></i>
+              <span>Dashboard</span>
+            </Link>
+          </div>
 
-        {/* Dashboard */}
-        <div className="admin-nav-item">
-          <Link 
-            to="/admin/dashboard" 
-            className={`admin-nav-link ${
-              isActive('/admin/dashboard') || location.pathname === '/admin' ? 'active' : ''
-            }`}
-          >
-            <i className="fas fa-tachometer-alt admin-nav-icon"></i>
-            <span>Dashboard</span>
-          </Link>
-        </div>
+          {/* Content Management */}
+          <div className="admin-nav-item">
+            <Link 
+              to="/admin/content" 
+              className={`admin-nav-link ${isActive('/admin/content') ? 'active' : ''}`}
+              onClick={() => setOpen(false)}
+            >
+              <i className="fas fa-edit admin-nav-icon"></i>
+              <span>Manage Content</span>
+            </Link>
+          </div>
 
-        {/* Content Management */}
-        <div className="admin-nav-item">
-          <Link 
-            to="/admin/content" 
-            className={`admin-nav-link ${isActive('/admin/content') ? 'active' : ''}`}
-          >
-            <i className="fas fa-edit admin-nav-icon"></i>
-            <span>Manage Content</span>
-          </Link>
-        </div>
-
-        {/* Blog Management */}
+          {/* Blog Management */}
         <div className="admin-nav-item">
           <Link 
             to="/admin/blogs" 
             className={`admin-nav-link ${isActive('/admin/blogs') ? 'active' : ''}`}
+            onClick={() => setOpen(false)}
           >
             <i className="fas fa-blog admin-nav-icon"></i>
             <span>Manage Blogs</span>
@@ -93,6 +111,7 @@ const AdminSidebar = () => {
           <Link 
             to="/admin/ministries" 
             className={`admin-nav-link ${isActive('/admin/ministries') ? 'active' : ''}`}
+            onClick={() => setOpen(false)}
           >
             <i className="fas fa-users admin-nav-icon"></i>
             <span>Manage Ministries</span>
@@ -104,6 +123,7 @@ const AdminSidebar = () => {
           <Link 
             to="/admin/messages" 
             className={`admin-nav-link ${isActive('/admin/messages') ? 'active' : ''}`}
+            onClick={() => setOpen(false)}
           >
             <i className="fas fa-envelope admin-nav-icon"></i>
             <span>Contact Messages</span>
@@ -125,6 +145,7 @@ const AdminSidebar = () => {
             className="admin-nav-link"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => setOpen(false)}
           >
             <i className="fas fa-external-link-alt admin-nav-icon"></i>
             <span>View Website</span>
@@ -138,17 +159,11 @@ const AdminSidebar = () => {
             className="admin-nav-link"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => setOpen(false)}
           >
             <i className="fas fa-images admin-nav-icon"></i>
             <span>Gallery</span>
           </a>
-        </div>
-
-        {/* System Section */}
-        <div className="admin-nav-divider"></div>
-        
-        <div className="admin-nav-section">
-          <div className="admin-nav-section-title">System</div>
         </div>
 
         {/* Settings */}
@@ -156,6 +171,7 @@ const AdminSidebar = () => {
           <Link 
             to="/admin/settings" 
             className={`admin-nav-link ${isActive('/admin/settings') ? 'active' : ''}`}
+            onClick={() => setOpen(false)}
           >
             <i className="fas fa-cog admin-nav-icon"></i>
             <span>Settings</span>
@@ -174,6 +190,7 @@ const AdminSidebar = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

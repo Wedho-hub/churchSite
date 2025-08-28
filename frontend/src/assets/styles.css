@@ -1,3 +1,135 @@
+/* Back to Top Button Styles */
+.back-to-top-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  background: var(--primary-color);
+  color: #fff;
+  box-shadow: var(--shadow-lg);
+}
+.back-to-top-btn.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Responsive Spacing for Mobile */
+@media (max-width: 768px) {
+  .container, .admin-content, .card, .blog-article.newspaper {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  .admin-sidebar {
+    width: 80vw;
+    min-width: 220px;
+    max-width: 320px;
+    left: 0;
+    top: 0;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(.4,0,.2,1);
+  }
+  .admin-sidebar.show {
+    transform: translateX(0);
+    box-shadow: 0 0 0 100vw rgba(0,0,0,0.3);
+  }
+}
+
+/* Button & Link Interactivity */
+.btn, .admin-nav-link, .nav-link {
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s, border 0.2s;
+}
+.btn:active, .admin-nav-link:active, .nav-link:active {
+  filter: brightness(0.95);
+  box-shadow: var(--shadow-md);
+}
+.btn:focus, .admin-nav-link:focus, .nav-link:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+.btn-primary:active, .btn-primary:focus {
+  background: var(--primary-dark);
+  color: #fff;
+}
+
+/* Image Responsiveness */
+img, .gallery img, .blog-article img, .card img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--radius-md);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+img:hover, .gallery img:hover, .blog-article img:hover, .card img:hover {
+  box-shadow: var(--shadow-lg);
+  transform: scale(1.02);
+}
+
+/* Accessibility: Improve color contrast for secondary/gray text */
+.text-secondary, .text-muted, .admin-sidebar .text-white-50 {
+  color: #6b7280 !important;
+}
+.admin-sidebar .text-white-50 {
+  color: #b0b7c3 !important;
+}
+/* Newspaper Blog Article Styles */
+.blog-article.newspaper {
+  font-family: 'Merriweather', Georgia, 'Times New Roman', Times, serif;
+  font-size: 1.13rem;
+  line-height: 1.85;
+  max-width: 900px;
+  margin: 0 auto;
+  background: #fffdfa;
+  border: 1.5px solid #e5e7eb;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.07);
+  min-height: 400px;
+}
+.blog-article .newspaper-heading {
+  font-family: 'Merriweather', Georgia, 'Times New Roman', Times, serif;
+  font-size: 1.25rem;
+  color: #1d3557;
+  border-left: 4px solid var(--primary-color);
+  padding-left: 0.5em;
+  margin-bottom: 0.5em;
+  letter-spacing: 0.01em;
+}
+.blog-article .newspaper-paragraph {
+  font-family: 'Georgia', 'Times New Roman', Times, serif;
+  font-size: 1.08rem;
+  color: #22223b;
+  text-align: justify;
+  margin-bottom: 1.1em;
+}
+.blog-image-float {
+  float: right;
+  margin-left: 2rem !important;
+  margin-bottom: 1rem !important;
+  border: 1.5px solid #e5e7eb;
+  background: #f8fafc;
+}
+@media (max-width: 768px) {
+  .blog-image-float {
+    float: none;
+    display: block;
+    margin: 0 auto 1rem auto !important;
+    max-width: 100% !important;
+  }
+  .blog-article.newspaper {
+    padding: 1.2rem;
+    font-size: 1rem;
+  }
+}
 /**
  * Professional Church Website Styles
  * Modern, clean design with consistent color scheme and typography
@@ -211,6 +343,7 @@ h1, h2, h3, h4, h5, h6 {
   background-color: rgba(255, 255, 255, 0.95) !important;
   border-bottom: 1px solid var(--gray-200);
   position: relative;
+  z-index: 2000;
 }
 
 .navbar-brand {

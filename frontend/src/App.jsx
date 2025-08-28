@@ -53,57 +53,167 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <div className="d-flex flex-column min-vh-100">
-        <AppNavbar />
-        <main className="flex-grow-1">
-          <Routes>
-            {/* Public Routes */}
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<AboutUs />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/blogs" element={<BlogPublicList />} />
-            <Route path="/blogs/:slug" element={<BlogDetail />} />
-            <Route path="/ministries" element={<Ministries />} />
-            <Route path="/bulletins" element={<Bulletins />} />
-            <Route path="/resources" element={<Resources />} />
-            <Route path="/gallery" element={<Gallery />} />
-            
-            {/* Authentication Route */}
-            <Route path="/login" element={<Login />} />
-
-            {/* Admin Routes - Protected */}
-            <Route
-              path="/admin"
-              element={
-                <PrivateRoute>
-                  <AdminLayout />
-                </PrivateRoute>
-              }
-            >
-              <Route index element={<AdminDashboard />} />
-              <Route path="dashboard" element={<AdminDashboard />} />
-              <Route path="blogs" element={<ManageBlogs />} />
-              <Route path="content" element={<ManageContent />} />
-              <Route path="ministries" element={<ManageMinistries />} />
-              <Route path="messages" element={<ContactMessages />} />
-            </Route>
-
-            {/* Catch-all route for 404 */}
-            <Route path="*" element={
-              <div className="container text-center py-5">
-                <h1 className="display-1 text-muted">404</h1>
-                <h2>Page Not Found</h2>
-                <p className="lead">The page you're looking for doesn't exist.</p>
-                <a href="/" className="btn btn-primary">
-                  <i className="fas fa-home me-2"></i>
-                  Go Home
-                </a>
-              </div>
-            } />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
+      <Routes>
+        {/* Public Routes (with Navbar & Footer) */}
+        <Route
+          path="/"
+          element={
+            <div className="d-flex flex-column min-vh-100">
+              <AppNavbar />
+              <main className="flex-grow-1">
+                <Home />
+              </main>
+              <Footer />
+            </div>
+          }
+        />
+        <Route
+          path="/about"
+          element={
+            <div className="d-flex flex-column min-vh-100">
+              <AppNavbar />
+              <main className="flex-grow-1">
+                <AboutUs />
+              </main>
+              <Footer />
+            </div>
+          }
+        />
+        <Route
+          path="/contact"
+          element={
+            <div className="d-flex flex-column min-vh-100">
+              <AppNavbar />
+              <main className="flex-grow-1">
+                <Contact />
+              </main>
+              <Footer />
+            </div>
+          }
+        />
+        <Route
+          path="/blogs"
+          element={
+            <div className="d-flex flex-column min-vh-100">
+              <AppNavbar />
+              <main className="flex-grow-1">
+                <BlogPublicList />
+              </main>
+              <Footer />
+            </div>
+          }
+        />
+        <Route
+          path="/blogs/:slug"
+          element={
+            <div className="d-flex flex-column min-vh-100">
+              <AppNavbar />
+              <main className="flex-grow-1">
+                <BlogDetail />
+              </main>
+              <Footer />
+            </div>
+          }
+        />
+        <Route
+          path="/ministries"
+          element={
+            <div className="d-flex flex-column min-vh-100">
+              <AppNavbar />
+              <main className="flex-grow-1">
+                <Ministries />
+              </main>
+              <Footer />
+            </div>
+          }
+        />
+        <Route
+          path="/bulletins"
+          element={
+            <div className="d-flex flex-column min-vh-100">
+              <AppNavbar />
+              <main className="flex-grow-1">
+                <Bulletins />
+              </main>
+              <Footer />
+            </div>
+          }
+        />
+        <Route
+          path="/resources"
+          element={
+            <div className="d-flex flex-column min-vh-100">
+              <AppNavbar />
+              <main className="flex-grow-1">
+                <Resources />
+              </main>
+              <Footer />
+            </div>
+          }
+        />
+        <Route
+          path="/gallery"
+          element={
+            <div className="d-flex flex-column min-vh-100">
+              <AppNavbar />
+              <main className="flex-grow-1">
+                <Gallery />
+              </main>
+              <Footer />
+            </div>
+          }
+        />
+        {/* Authentication Route (with Navbar & Footer) */}
+        <Route
+          path="/login"
+          element={
+            <div className="d-flex flex-column min-vh-100">
+              <AppNavbar />
+              <main className="flex-grow-1">
+                <Login />
+              </main>
+              <Footer />
+            </div>
+          }
+        />
+        {/* Admin Routes - Protected (NO Navbar/Footer) */}
+        <Route
+          path="/admin"
+          element={
+            <PrivateRoute>
+              <AdminLayout />
+            </PrivateRoute>
+          }
+        >
+          <Route index element={<AdminDashboard />} />
+          <Route path="dashboard" element={<AdminDashboard />} />
+          <Route path="blogs" element={<ManageBlogs />} />
+          <Route path="content" element={<ManageContent />} />
+          <Route path="ministries" element={<ManageMinistries />} />
+          <Route path="messages" element={<ContactMessages />} />
+        </Route>
+        {/* Catch-all route for 404 (with Navbar & Footer) */}
+        <Route
+          path="*"
+          element={
+            <div className="d-flex flex-column min-vh-100">
+              <AppNavbar />
+              <main className="flex-grow-1">
+                <div className="container text-center py-5">
+                  <h1 className="display-1 text-muted">404</h1>
+                  <h2>Page Not Found</h2>
+                  <p className="lead">The page you're looking for doesn't exist.</p>
+                  <a href="/" className="btn btn-primary">
+                    <i className="fas fa-home me-2"></i>
+                    Go Home
+                  </a>
+                </div>
+              </main>
+              <Footer />
+            </div>
+          }
+        />
+      </Routes>
     </BrowserRouter>
   );
 };

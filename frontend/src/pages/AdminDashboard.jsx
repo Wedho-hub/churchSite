@@ -1,55 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';
-import '../assets/styles.css';
-
-// Placeholder data for when APIs are not available
-const placeholderData = {
-  blogs: [
-    { _id: '1', title: 'Welcome to Our Church', content: 'We are excited to welcome you...', image: '/placeholder/blog1.jpg', createdAt: '2024-01-15' },
-    { _id: '2', title: 'Sabbath Service Highlights', content: 'This week we focused on...', image: '/placeholder/blog2.jpg', createdAt: '2024-01-08' },
-    { _id: '3', title: 'Community Outreach Program', content: 'Our church is reaching out...', image: '/placeholder/blog3.jpg', createdAt: '2024-01-01' }
-  ],
-  ministries: [
-    { _id: '1', name: 'Youth Ministry', leader: 'Pastor John Smith', description: 'Empowering young people...', functions: ['Weekly meetings', 'Bible study', 'Community service'] },
-    { _id: '2', name: 'Women\'s Ministry', leader: 'Sister Mary Johnson', description: 'Supporting women...', functions: ['Prayer meetings', 'Bible study', 'Fellowship'] },
-    { _id: '3', name: 'Men\'s Fellowship', leader: 'Elder David Brown', description: 'Building strong men...', functions: ['Monthly breakfasts', 'Retreats', 'Service projects'] }
-  ],
-  messages: [
-    { _id: '1', name: 'Sarah Wilson', email: 'sarah@email.com', message: 'I would like to learn more about your church programs.', read: false, createdAt: '2024-01-20' },
-    { _id: '2', name: 'Michael Davis', email: 'michael@email.com', message: 'Can I schedule a visit to your church this Sunday?', read: true, createdAt: '2024-01-19' }
-  ],
-  contentSections: [
-    { section: 'about', title: 'About Our Church', body: 'We are a vibrant community...' },
-    { section: 'mission', title: 'Our Mission', body: 'To spread the love of Christ...' },
-    { section: 'vision', title: 'Our Vision', body: 'To be a light in our community...' }
-  ]
-};
 
 const AdminDashboard = () => {
   const { admin, token } = useAuth();
-  const [stats, setStats] = useState({
-    blogs: 0,
-    ministries: 0,
-    messages: 0,
-    contentSections: 0,
-  });
+  const [stats, setStats] = useState({ blogs: 0, ministries: 0, messages: 0, contentSections: 0 });
   const [recentMessages, setRecentMessages] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [usePlaceholder, setUsePlaceholder] = useState(false);
 
   useEffect(() => {
     const fetchStats = async () => {
       try {
         const headers = token ? { Authorization: `Bearer ${token}` } : {};
-        
         const [blogsRes, ministriesRes, messagesRes, contentRes] = await Promise.all([
-          axios.get('/api/blogs').catch(() => ({ data: placeholderData.blogs })),
-          axios.get('/api/ministries').catch(() => ({ data: placeholderData.ministries })),
-          axios.get('/api/messages', { headers }).catch(() => ({ data: placeholderData.messages })),
-          axios.get('/api/content').catch(() => ({ data: placeholderData.contentSections })),
+          axios.get('/api/blogs'),
+          axios.get('/api/ministries'),
+          axios.get('/api/messages', { headers }),
+          axios.get('/api/content'),
         ]);
-
         setStats({
           blogs: blogsRes.data.length,
           ministries: ministriesRes.data.length,
@@ -57,17 +25,9 @@ const AdminDashboard = () => {
           contentSections: contentRes.data.length,
         });
         setRecentMessages(messagesRes.data.slice(0, 5));
-      } catch (error) {
-        console.error('Error fetching dashboard data:', error);
-        // Fallback to placeholder data
-        setStats({
-          blogs: placeholderData.blogs.length,
-          ministries: placeholderData.ministries.length,
-          messages: placeholderData.messages.length,
-          contentSections: placeholderData.contentSections.length,
-        });
-        setRecentMessages(placeholderData.messages.slice(0, 5));
-        setUsePlaceholder(true);
+      } catch {
+        setStats({ blogs: 0, ministries: 0, messages: 0, contentSections: 0 });
+        setRecentMessages([]);
       } finally {
         setLoading(false);
       }
@@ -80,11 +40,6 @@ const AdminDashboard = () => {
       <header className="admin-header mb-4">
         <h1 className="admin-page-title">Welcome, {admin?.username || 'Admin'}</h1>
         <p className="admin-page-subtitle">Here's what's happening in your church today</p>
-        {usePlaceholder && (
-          <div className="alert alert-info">
-            <i className="fas fa-info-circle"></i> Displaying placeholder data. Connect to backend for live data.
-          </div>
-        )}
       </header>
 
       {loading ? (

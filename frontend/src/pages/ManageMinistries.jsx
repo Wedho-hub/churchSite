@@ -1,175 +1,103 @@
-import React, { useEffect, useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';
+
 
 function ManageMinistries() {
   const { token } = useAuth();
   const [ministries, setMinistries] = useState([]);
-  const [form, setForm] = useState({
-    name: '',
-    leader: '',
-    description: '',
-    functions: '',
-    _id: null,
-  });
-  const [message, setMsg] = useState('');
+  const [form, setForm] = useState({ _id: '', name: '', description: '' });
+  const [message, setMessage] = useState('');
 
-  // Fetch existing ministries
+  // Fetch all ministries
   const fetchMinistries = async () => {
     try {
       const res = await axios.get('/api/ministries');
       setMinistries(res.data);
-    } catch (err) {
-      console.error(err);
+    } catch {
+      setMessage('❌ Failed to fetch ministries');
     }
   };
 
-  useEffect(() => {
-    fetchMinistries();
-  }, []);
+  useEffect(() => { fetchMinistries(); }, []);
 
-  // Handle input changes
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  // Handle form input changes
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
-  // Submit form (create or update)
+  // Create or update ministry
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const ministryData = {
-      name: form.name,
-      leader: form.leader,
-      description: form.description,
-      functions: form.functions.split(',').map(f => f.trim()),
-    };
-
+    if (!form.name) return setMessage('❌ Name is required');
     try {
       if (form._id) {
-        await axios.put(`/api/ministries/${form._id}`, ministryData, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setMsg('✅ Ministry updated');
+        await axios.put(`/api/ministries/${form._id}`, { name: form.name, description: form.description }, { headers: { Authorization: `Bearer ${token}` } });
+        setMessage('✅ Ministry updated');
       } else {
-        await axios.post('/api/ministries', ministryData, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setMsg('✅ Ministry created');
+        await axios.post('/api/ministries', { name: form.name, description: form.description }, { headers: { Authorization: `Bearer ${token}` } });
+        setMessage('✅ Ministry created');
       }
-
-      setForm({ name: '', leader: '', description: '', functions: '', _id: null });
+      setForm({ _id: '', name: '', description: '' });
       fetchMinistries();
-    } catch (err) {
-      console.error(err);
-      setMsg('❌ Error saving ministry');
+    } catch {
+      setMessage('❌ Error saving ministry');
     }
   };
 
   // Start editing a ministry
-  const startEdit = (m) => {
-    setForm({
-      name: m.name,
-      leader: m.leader,
-      description: m.description || '',
-      functions: m.functions?.join(', ') || '',
-      _id: m._id,
-    });
+  const startEdit = (min) => {
+    setForm({ _id: min._id, name: min.name, description: min.description || '' });
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  // Delete a ministry
-  const deleteMinistry = async (id) => {
-    if (!window.confirm('Delete this ministry?')) return;
-    try {
-      await axios.delete(`/api/ministries/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setMsg('🗑️ Ministry deleted');
-      fetchMinistries();
-    } catch (err) {
-      console.error(err);
-      setMsg('❌ Error deleting ministry');
-    }
   };
 
   return (
     <div className="container mt-4">
-      <h2>Manage Ministries</h2>
+      <h2>🙏 Manage Ministries</h2>
       {message && <div className="alert alert-info">{message}</div>}
 
-      <form onSubmit={handleSubmit} className="mb-4">
+      <form onSubmit={handleSubmit} className="mb-4 p-3 bg-white rounded shadow-sm">
         <input
           name="name"
           value={form.name}
           onChange={handleChange}
           className="form-control mb-2"
-          placeholder="Ministry name"
+          placeholder="Ministry Name"
           required
         />
-
-        <input
-          name="leader"
-          value={form.leader}
-          onChange={handleChange}
-          className="form-control mb-2"
-          placeholder="Leader's name"
-          required
-        />
-
         <textarea
           name="description"
           value={form.description}
           onChange={handleChange}
           className="form-control mb-2"
-          placeholder="Brief description (optional)"
+          rows={3}
+          placeholder="Description"
         />
-
-        <input
-          name="functions"
-          value={form.functions}
-          onChange={handleChange}
-          className="form-control mb-2"
-          placeholder="Functions (comma-separated)"
-        />
-
         <button className="btn btn-primary">
-          {form._id ? 'Update Ministry ✏️' : 'Add Ministry ➕'}
+          {form._id ? 'Update Ministry ✏️' : 'Create Ministry ➕'}
         </button>
+        {form._id && (
+          <button
+            type="button"
+            className="btn btn-secondary ms-2"
+            onClick={() => setForm({ _id: '', name: '', description: '' })}
+          >
+            Cancel
+          </button>
+        )}
       </form>
 
-      {/* Ministries List */}
       <ul className="list-group">
-        {ministries.map((m) => (
-          <li
-            key={m._id}
-            className="list-group-item d-flex justify-content-between align-items-start"
-          >
+        {ministries.map((min) => (
+          <li key={min._id} className="list-group-item d-flex justify-content-between">
             <div>
-              <h5>{m.name}</h5>
-              <p className="mb-1"><strong>Leader:</strong> {m.leader}</p>
-              {m.description && <p className="mb-1">{m.description}</p>}
-              {m.functions && (
-                <ul>
-                  {m.functions.map((f, i) => (
-                    <li key={i}>{f}</li>
-                  ))}
-                </ul>
-              )}
+              <strong>{min.name}</strong>: {min.description}
             </div>
-
-            <div>
-              <button
-                className="btn btn-sm btn-warning me-2"
-                onClick={() => startEdit(m)}
-              >
-                ✏️ Edit
-              </button>
-              <button
-                className="btn btn-sm btn-danger"
-                onClick={() => deleteMinistry(m._id)}
-              >
-                🗑️ Delete
-              </button>
-            </div>
+            <button
+              className="btn btn-sm btn-secondary"
+              onClick={() => startEdit(min)}
+            >
+              ✏️ Edit
+            </button>
           </li>
         ))}
       </ul>

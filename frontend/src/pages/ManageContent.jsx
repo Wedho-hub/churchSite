@@ -5,60 +5,41 @@ import { useAuth } from '../contexts/AuthContext';
 function ManageContent() {
   const { token } = useAuth();
   const [sections, setSections] = useState([]);
-  const [form, setForm] = useState({
-    section: '',
-    title: '',
-    body: '',
-  });
+  const [form, setForm] = useState({ section: '', title: '', body: '' });
   const [message, setMessage] = useState('');
 
-  // 🔄 Fetch all content sections
+  // Fetch all content sections
   const fetchSections = async () => {
     try {
       const res = await axios.get('/api/content');
       setSections(res.data);
-    } catch (err) {
-      console.error(err);
+    } catch {
       setMessage('❌ Failed to fetch sections');
     }
   };
 
-  useEffect(() => {
-    fetchSections();
-  }, []);
+  useEffect(() => { fetchSections(); }, []);
 
-  const handleChange = (e) =>
-    setForm({ ...form, [e.target.name]: e.target.value });
+  // Handle form input changes
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
+  // Create or update section
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.section) return setMessage('❌ Section ID is required');
-
     try {
-      await axios.put(`/api/content/${form.section}`, {
-        title: form.title,
-        body: form.body,
-      }, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
+      await axios.put(`/api/content/${form.section}`, { title: form.title, body: form.body }, { headers: { Authorization: `Bearer ${token}` } });
       setMessage(`✅ Section "${form.section}" saved`);
       setForm({ section: '', title: '', body: '' });
       fetchSections();
-    } catch (err) {
-      console.error(err);
+    } catch {
       setMessage('❌ Error saving section');
     }
   };
 
+  // Start editing a section
   const startEdit = (sec) => {
-    setForm({
-      section: sec.section,
-      title: sec.title || '',
-      body: sec.body || '',
-    });
+    setForm({ section: sec.section, title: sec.title || '', body: sec.body || '' });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -67,7 +48,7 @@ function ManageContent() {
       <h2>📝 Manage Site Sections</h2>
       {message && <div className="alert alert-info">{message}</div>}
 
-      <form onSubmit={handleSubmit} className="mb-4">
+      <form onSubmit={handleSubmit} className="mb-4 p-3 bg-white rounded shadow-sm">
         <input
           name="section"
           value={form.section}
