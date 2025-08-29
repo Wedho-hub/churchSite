@@ -103,20 +103,39 @@ function Home() {
             ))}
           </div>
         </div>
-        {/* Weather Widget */}
-        <div className="mb-5">
-          <WeatherWidget />
-        </div>
-        {/* Google Maps */}
-        <div className="mb-5">
-          <h4>📍 Find Us</h4>
-          <div className="ratio ratio-16x9">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18..."
-              loading="lazy"
-              allowFullScreen
-              title="Church Location"
-            />
+        {/* Weather Widget & Map Section */}
+        <div className="row g-4 mb-5 align-items-stretch">
+          <div className="col-md-5 col-lg-4">
+            <div className="h-100 d-flex align-items-center justify-content-center">
+              <WeatherWidget compact />
+            </div>
+          </div>
+          <div className="col-md-7 col-lg-8">
+            <div className="card shadow-sm h-100 p-0 border-0">
+              <div className="card-body p-3 pb-0">
+                <h5 className="card-title mb-2 text-primary"><i className="fas fa-map-marker-alt me-2"></i>Find Us</h5>
+              </div>
+              <div className="ratio ratio-16x9 rounded-bottom" style={{ minHeight: 180, maxHeight: 320 }}>
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3312.610996123374!2d18.509818575437922!3d-33.87391481932341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1dcc5ea5c1ca2eaf%3A0x1a4fd5ef112ea8ee!2sSinenjongo%20High%20School!5e0!3m2!1sen!2sza!4v1756485583924!5m2!1sen!2sza"
+                  style={{ border: 0, borderRadius: '0 0 1rem 1rem', minHeight: 180, maxHeight: 320, width: '100%' }}
+                  allowFullScreen=""
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Church Location"
+                />
+              </div>
+              <div className="card-footer bg-white border-0 text-end p-2">
+                <a
+                  href="https://www.google.com/maps/dir/?api=1&destination=Sinenjongo+High+School"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-outline-primary btn-sm"
+                >
+                  Get Directions
+                </a>
+              </div>
+            </div>
           </div>
         </div>
         {/* Call to Action */}

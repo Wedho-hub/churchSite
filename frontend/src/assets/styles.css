@@ -18,6 +18,44 @@
   color: #fff;
   box-shadow: var(--shadow-lg);
 }
+
+/* Weather Widget Compact Mode */
+.weather-widget-compact {
+  font-size: 0.97em;
+  min-width: 0;
+  max-width: 320px;
+  min-height: 0;
+  box-shadow: var(--shadow-xs);
+  padding: 0.75rem 1rem !important;
+}
+
+.weather-widget-compact .card-title {
+  font-size: 1rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.weather-widget-compact img {
+  width: 32px !important;
+  height: 32px !important;
+}
+
+/* Map Card Tweaks */
+.card .ratio iframe {
+  border-radius: 0 0 1rem 1rem;
+  min-height: 180px;
+  max-height: 320px;
+}
+
+@media (max-width: 767.98px) {
+  .weather-widget-compact {
+    max-width: 100%;
+    padding: 0.5rem 0.5rem !important;
+  }
+  .card .ratio iframe {
+    min-height: 120px;
+    max-height: 180px;
+  }
+}
 .back-to-top-btn.show {
   opacity: 1;
   pointer-events: auto;

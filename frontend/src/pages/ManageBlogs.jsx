@@ -36,9 +36,9 @@ function ManageBlogs() {
   // Limit lengths
   const limits = {
     title: 80,
-    intro: 400,
-    main: 800,
-    conclusion: 300
+    intro: 500,
+    main: 1500,
+    conclusion: 350
   };
   const handleChange = (e) => {
     const { name, value } = e.target;

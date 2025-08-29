@@ -1,0 +1,23 @@
+# production build output
+/dist
+
+# local build output
+frontend/dist
+backend/dist
+
+# Vite cache
+frontend/node_modules/.vite
+
+# npm logs
+npm-debug.log*
+
+# dotenv environment variables
+.env
+.env.*
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# VSCode settings
+.vscode/
