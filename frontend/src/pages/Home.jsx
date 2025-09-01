@@ -34,13 +34,35 @@ function Home() {
   return (
     <>
       <div className="container mt-4">
-        {/* Hero section */}
-        <div className="hero mb-5 p-5 text-white text-center rounded" style={{
+        {/* Enhanced Hero section */}
+        <div className="hero mb-5 position-relative text-white text-center rounded overflow-hidden" style={{
           background: "url('/hero.jpg') center/cover",
-          minHeight: 250
+          minHeight: 420,
+          maxHeight: 600,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          boxShadow: '0 4px 32px rgba(0,0,0,0.12)',
         }}>
-          <h1 className="display-4 fw-bold">Inkosiyeza SDA Church</h1>
-          <p className="lead">"Preparing a people to meet their God"</p>
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            background: 'linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.25) 100%)',
+            zIndex: 1
+          }} />
+          <div style={{ position: 'relative', zIndex: 2, padding: '3rem 1rem' }}>
+            <h1 className="display-2 fw-bold mb-3" style={{ textShadow: '0 2px 16px rgba(0,0,0,0.4)' }}>Inkosiyeza SDA Church</h1>
+            <p className="lead fs-3 mb-4" style={{ textShadow: '0 1px 8px rgba(0,0,0,0.3)' }}>
+              "Preparing a people to meet their God"
+            </p>
+            <Link to="/about" className="btn btn-light btn-lg shadow-sm px-4 py-2 fw-semibold">
+              Learn More About Us
+            </Link>
+          </div>
         </div>
         {/* Daily Verse */}
         <div className="alert alert-secondary text-center">
