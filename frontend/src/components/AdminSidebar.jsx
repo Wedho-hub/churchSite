@@ -76,9 +76,10 @@ const AdminSidebar = () => {
                 isActive('/admin/dashboard') || location.pathname === '/admin' ? 'active' : ''
               }`}
               onClick={() => setOpen(false)}
+              title="Dashboard"
             >
-              <i className="fas fa-tachometer-alt admin-nav-icon"></i>
-              <span>Dashboard</span>
+              <div className="admin-nav-icon-circle"><i className="fas fa-tachometer-alt" /></div>
+              <span className="admin-nav-label">Dashboard</span>
             </Link>
           </div>
 
@@ -88,9 +89,10 @@ const AdminSidebar = () => {
               to="/admin/content" 
               className={`admin-nav-link ${isActive('/admin/content') ? 'active' : ''}`}
               onClick={() => setOpen(false)}
+              title="Manage content"
             >
-              <i className="fas fa-edit admin-nav-icon"></i>
-              <span>Manage Content</span>
+              <div className="admin-nav-icon-circle"><i className="fas fa-edit" /></div>
+              <span className="admin-nav-label">Manage Content</span>
             </Link>
           </div>
 
@@ -100,9 +102,10 @@ const AdminSidebar = () => {
             to="/admin/blogs" 
             className={`admin-nav-link ${isActive('/admin/blogs') ? 'active' : ''}`}
             onClick={() => setOpen(false)}
+            title="Manage blogs"
           >
-            <i className="fas fa-blog admin-nav-icon"></i>
-            <span>Manage Blogs</span>
+            <div className="admin-nav-icon-circle"><i className="fas fa-blog" /></div>
+            <span className="admin-nav-label">Manage Blogs</span>
           </Link>
         </div>
 
@@ -112,9 +115,10 @@ const AdminSidebar = () => {
             to="/admin/ministries" 
             className={`admin-nav-link ${isActive('/admin/ministries') ? 'active' : ''}`}
             onClick={() => setOpen(false)}
+            title="Manage ministries"
           >
-            <i className="fas fa-users admin-nav-icon"></i>
-            <span>Manage Ministries</span>
+            <div className="admin-nav-icon-circle"><i className="fas fa-users" /></div>
+            <span className="admin-nav-label">Manage Ministries</span>
           </Link>
         </div>
 
@@ -124,9 +128,10 @@ const AdminSidebar = () => {
             to="/admin/messages" 
             className={`admin-nav-link ${isActive('/admin/messages') ? 'active' : ''}`}
             onClick={() => setOpen(false)}
+            title="Contact messages"
           >
-            <i className="fas fa-envelope admin-nav-icon"></i>
-            <span>Contact Messages</span>
+            <div className="admin-nav-icon-circle"><i className="fas fa-envelope" /></div>
+            <span className="admin-nav-label">Contact Messages</span>
           </Link>
         </div>
 
@@ -147,8 +152,8 @@ const AdminSidebar = () => {
             rel="noopener noreferrer"
             onClick={() => setOpen(false)}
           >
-            <i className="fas fa-external-link-alt admin-nav-icon"></i>
-            <span>View Website</span>
+            <div className="admin-nav-icon-circle"><i className="fas fa-external-link-alt" /></div>
+            <span className="admin-nav-label">View Website</span>
           </Link>
         </div>
 
@@ -161,8 +166,8 @@ const AdminSidebar = () => {
             rel="noopener noreferrer"
             onClick={() => setOpen(false)}
           >
-            <i className="fas fa-images admin-nav-icon"></i>
-            <span>Gallery</span>
+            <div className="admin-nav-icon-circle"><i className="fas fa-images" /></div>
+            <span className="admin-nav-label">Gallery</span>
           </a>
         </div>
 
@@ -172,9 +177,10 @@ const AdminSidebar = () => {
             to="/admin/settings" 
             className={`admin-nav-link ${isActive('/admin/settings') ? 'active' : ''}`}
             onClick={() => setOpen(false)}
+            title="Settings"
           >
-            <i className="fas fa-cog admin-nav-icon"></i>
-            <span>Settings</span>
+            <div className="admin-nav-icon-circle"><i className="fas fa-cog" /></div>
+            <span className="admin-nav-label">Settings</span>
           </Link>
         </div>
       </nav>

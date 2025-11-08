@@ -14,13 +14,13 @@ function Footer() {
             <small className="text-secondary">
               Powered by{' '}
               <a
-                href="https://github.com"
+                href="https://wedhoportfolio.netlify.app"
                 target="_blank"
                 rel="noreferrer"
                 className="text-warning fw-bold text-decoration-underline"
-                aria-label="Visit Tishbite Digital on GitHub"
+                aria-label="Visit Wellington Dhliwayo's Portfolio"
               >
-                Tishbite Digital
+                Wedho
               </a>
             </small>
           </div>

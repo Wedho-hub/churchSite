@@ -33,29 +33,28 @@ function BlogPublicList() {
 
       {blogs.length === 0 && <p>No blog posts yet.</p>}
 
-      <div className="row">
+      <div className="row g-4">
         {blogs.map((blog) => (
-          <div key={blog._id} className="col-md-6 mb-4">
-            <div className="card h-100 shadow-sm">
+          <div key={blog._id} className="col-md-6 col-lg-4 mb-4">
+            <div className="card h-100 shadow-lg border-0 blog-card">
               {blog.image && (
                 <img
                   src={blog.image}
-                  className="card-img-top"
+                  className="card-img-top rounded-top"
                   alt={blog.title}
-                  style={{ height: "200px", objectFit: "cover" }}
+                  style={{ height: "220px", objectFit: "cover" }}
                 />
               )}
-
               <div className="card-body d-flex flex-column">
-                <h5 className="card-title">{blog.title}</h5>
-                <p className="card-text">
-                  {blog.content.length > 100
-                    ? blog.content.substring(0, 100) + "..."
+                <h5 className="card-title fw-bold mb-2 text-primary">{blog.title}</h5>
+                <p className="card-text text-secondary mb-3" style={{ minHeight: 60 }}>
+                  {blog.content.length > 120
+                    ? blog.content.substring(0, 120) + "..."
                     : blog.content}
                 </p>
                 <Link
                   to={`/blogs/${blog.slug}`}
-                  className="mt-auto btn btn-primary"
+                  className="mt-auto btn btn-outline-primary fw-semibold"
                 >
                   📖 Read More
                 </Link>

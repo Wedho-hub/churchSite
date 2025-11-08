@@ -270,62 +270,62 @@ Key beliefs include:
       {
         title: "Adult Sabbath School Lesson Study Guide",
         description: "Quarterly lesson study guide for adult Sabbath School classes with daily readings and discussion questions.",
-        type: "pdf",
-        url: "https://www.adventistbiblicalresearch.org/materials/sabbath-school-lessons"
+        type: "link",
+        link: "https://www.adventistbiblicalresearch.org/materials/sabbath-school-lessons"
       },
       {
         title: "Youth Sabbath School Lesson Guide",
         description: "Age-appropriate lesson materials for youth Sabbath School classes with interactive activities.",
-        type: "pdf",
-        url: "https://www.adventist.org/youth-lessons"
+        type: "link",
+        link: "https://www.adventist.org/youth-lessons"
       },
       {
         title: "Church Manual - Official SDA Guidelines",
         description: "Official Seventh-day Adventist Church Manual with policies, procedures, and organizational guidelines.",
-        type: "pdf",
-        url: "https://www.adventist.org/church-manual/"
+        type: "link",
+        link: "https://www.adventist.org/church-manual/"
       },
       {
         title: "Spirit of Prophecy Library",
         description: "Complete digital collection of Ellen G. White writings including books, articles, and manuscripts.",
         type: "link",
-        url: "https://egwwritings.org/"
+        link: "https://egwwritings.org/"
       },
       {
         title: "Bible Study Guides - Discover Series",
         description: "Interactive Bible study guides covering fundamental Christian beliefs and prophecy topics.",
         type: "link",
-        url: "https://www.biblestudyguides.org/"
+        link: "https://www.biblestudyguides.org/"
       },
       {
         title: "Adventist Review Magazine",
         description: "Official magazine of the Seventh-day Adventist Church with spiritual articles and church news.",
         type: "link",
-        url: "https://www.adventistreview.org/"
+        link: "https://www.adventistreview.org/"
       },
       {
         title: "Health and Wellness Resources",
         description: "Comprehensive health education materials focusing on the eight natural remedies and healthy living.",
-        type: "pdf",
-        url: "/uploads/health-wellness-guide.pdf"
+        type: "file",
+        link: "/uploads/health-wellness-guide.pdf"
       },
       {
         title: "Pathfinder Club Manual",
         description: "Complete guide for Pathfinder club activities, honors, and leadership development programs.",
-        type: "pdf",
-        url: "/uploads/pathfinder-manual.pdf"
+        type: "file",
+        link: "/uploads/pathfinder-manual.pdf"
       },
       {
         title: "Evangelism Training Materials",
         description: "Resources for personal evangelism, Bible study methods, and witnessing techniques.",
-        type: "pdf",
-        url: "/uploads/evangelism-training.pdf"
+        type: "file",
+        link: "/uploads/evangelism-training.pdf"
       },
       {
         title: "Church History and Heritage",
         description: "Historical documents and materials about the Seventh-day Adventist Church and our local church history.",
-        type: "pdf",
-        url: "/uploads/church-history.pdf"
+        type: "file",
+        link: "/uploads/church-history.pdf"
       }
     ]);
 

@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';
+import HeaderIcon from '../components/HeaderIcon';
 
 
 function ManageMinistries() {
@@ -52,52 +53,66 @@ function ManageMinistries() {
 
   return (
     <div className="container mt-4">
-      <h2>🙏 Manage Ministries</h2>
+      <HeaderIcon icon="fa-hands-praying" title="Manage Ministries" subtitle="Add and edit ministries" />
       {message && <div className="alert alert-info">{message}</div>}
 
-      <form onSubmit={handleSubmit} className="mb-4 p-3 bg-white rounded shadow-sm">
-        <input
-          name="name"
-          value={form.name}
-          onChange={handleChange}
-          className="form-control mb-2"
-          placeholder="Ministry Name"
-          required
-        />
-        <textarea
-          name="description"
-          value={form.description}
-          onChange={handleChange}
-          className="form-control mb-2"
-          rows={3}
-          placeholder="Description"
-        />
-        <button className="btn btn-primary">
-          {form._id ? 'Update Ministry ✏️' : 'Create Ministry ➕'}
-        </button>
-        {form._id && (
-          <button
-            type="button"
-            className="btn btn-secondary ms-2"
-            onClick={() => setForm({ _id: '', name: '', description: '' })}
-          >
-            Cancel
-          </button>
-        )}
-      </form>
+      <div className="card mb-4 shadow-sm">
+        <div className="card-body">
+          <form onSubmit={handleSubmit} className="mb-0">
+            <div className="row g-2 align-items-center">
+              <div className="col-sm-5">
+                <input
+                  name="name"
+                  value={form.name}
+                  onChange={handleChange}
+                  className="form-control"
+                  placeholder="Ministry Name"
+                  required
+                />
+              </div>
+              <div className="col-sm-5">
+                <input
+                  name="description"
+                  value={form.description}
+                  onChange={handleChange}
+                  className="form-control"
+                  placeholder="Short description"
+                />
+              </div>
+              <div className="col-sm-2 d-flex gap-2">
+                <button className="btn btn-primary w-100" type="submit">
+                  {form._id ? 'Update' : 'Create'}
+                </button>
+                {form._id && (
+                  <button
+                    type="button"
+                    className="btn btn-outline-secondary w-100"
+                    onClick={() => setForm({ _id: '', name: '', description: '' })}
+                  >
+                    Cancel
+                  </button>
+                )}
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
 
       <ul className="list-group">
         {ministries.map((min) => (
-          <li key={min._id} className="list-group-item d-flex justify-content-between">
+          <li key={min._id} className="list-group-item d-flex justify-content-between align-items-center">
             <div>
-              <strong>{min.name}</strong>: {min.description}
+              <strong className="d-block">{min.name}</strong>
+              <small className="text-muted">{min.description}</small>
             </div>
-            <button
-              className="btn btn-sm btn-secondary"
-              onClick={() => startEdit(min)}
-            >
-              ✏️ Edit
-            </button>
+            <div>
+              <button
+                className="btn btn-sm btn-outline-primary me-2"
+                onClick={() => startEdit(min)}
+              >
+                ✏️ Edit
+              </button>
+            </div>
           </li>
         ))}
       </ul>

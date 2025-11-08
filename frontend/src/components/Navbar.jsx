@@ -86,47 +86,58 @@ function AppNavbar() {
           {/* Admin section and divider OUTSIDE collapse, but in flex row */}
           <div className="vr mx-2 d-none d-lg-block"></div>
           {token ? (
-            <NavDropdown 
-              title={
-                <span className="text-success">
-                  <i className="fas fa-user-shield me-1"></i>
-                  Admin
-                </span>
-              } 
-              id="admin-dropdown"
-              className="fw-medium"
-            >
-              <NavDropdown.Item as={Link} to="/admin/dashboard">
-                <i className="fas fa-tachometer-alt me-2"></i>
-                Dashboard
-              </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/admin/content">
-                <i className="fas fa-edit me-2"></i>
-                Manage Content
-              </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/admin/blogs">
-                <i className="fas fa-blog me-2"></i>
-                Manage Blogs
-              </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/admin/ministries">
-                <i className="fas fa-users me-2"></i>
-                Manage Ministries
-              </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/admin/messages">
-                <i className="fas fa-envelope me-2"></i>
-                Messages
-              </NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item onClick={handleLogout} className="text-danger">
-                <i className="fas fa-sign-out-alt me-2"></i>
-                Logout
-              </NavDropdown.Item>
-            </NavDropdown>
+            <div className="position-relative d-inline-block">
+              <NavDropdown
+                title={
+                  <span className="text-success">
+                    <i className="fas fa-user-shield me-1"></i>
+                    Admin
+                  </span>
+                }
+                id="admin-dropdown"
+                className="fw-medium admin-dropdown-fix"
+                menuVariant="light"
+                style={{ zIndex: 1050 }}
+                popperConfig={{
+                  strategy: 'fixed',
+                  modifiers: [
+                    { name: 'preventOverflow', options: { boundary: 'viewport' } },
+                    { name: 'flip', options: { fallbackPlacements: ['bottom', 'top'] } }
+                  ]
+                }}
+              >
+                <NavDropdown.Item as={Link} to="/admin/dashboard">
+                  <i className="fas fa-tachometer-alt me-2"></i>
+                  Dashboard
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/admin/content">
+                  <i className="fas fa-edit me-2"></i>
+                  Manage Content
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/admin/blogs">
+                  <i className="fas fa-blog me-2"></i>
+                  Manage Blogs
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/admin/ministries">
+                  <i className="fas fa-users me-2"></i>
+                  Manage Ministries
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/admin/messages">
+                  <i className="fas fa-envelope me-2"></i>
+                  Messages
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item onClick={handleLogout} className="text-danger">
+                  <i className="fas fa-sign-out-alt me-2"></i>
+                  Logout
+                </NavDropdown.Item>
+              </NavDropdown>
+            </div>
           ) : (
-            <Button 
-              as={Link} 
-              to="/login" 
-              variant="outline-primary" 
+            <Button
+              as={Link}
+              to="/login"
+              variant="outline-primary"
               size="sm"
               className="ms-2"
             >

@@ -36,7 +36,7 @@ function Home() {
       <div className="container mt-4">
         {/* Enhanced Hero section */}
         <div className="hero mb-5 position-relative text-white text-center rounded overflow-hidden" style={{
-          background: "url('/hero.jpg') center/cover",
+          // background: "url('/hero.jpg') center/cover",
           minHeight: 420,
           maxHeight: 600,
           display: 'flex',
